@@ -14,7 +14,7 @@ nltk.download('averaged_perceptron_tagger')
 
 responses = {
     "return": "You can return anytime within 30 days with all the costs covered",
-    "delivery": "We offer free delivery for orders above $50. Standard shipping takes 3-5 business days.",
+    "deliver": "We offer free delivery for orders above $50. Standard shipping takes 3-5 business days.",
     "discount": "We have seasonal discounts! Check our website for the latest deals.",
     "availability": "Please specify the product name, and I can check if it's in stock.",
     "exit": "exit",
@@ -34,7 +34,7 @@ def get_wordnet_pos(tag):
 
 expanded_keywords = {
     "return": {"return", "refund", "exchange", "give back", "send back"},
-    "delivery": {"delivery", "shipping", "transport", "shipment", "deliver"},
+    "deliver": {"deliver", "shipping", "transport", "shipment", "deliver"},
     "discount": {"discount", "sale", "offer", "deal", "promotion", "coupon"},
     "availability": {"stock", "available", "inventory", "in store"},
     "exit": {"exit", "quit", "leave"},
