@@ -1,5 +1,4 @@
 import nltk
-import pandas as pd
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet, stopwords
@@ -19,7 +18,6 @@ responses = {
     "exit": "exit",
 }
 
-# Product-specific responses
 product_responses = {
     "tshirt": {
         "default": "We have various t-shirts available in different sizes and colors.",
@@ -63,7 +61,6 @@ def get_wordnet_pos(tag):
     return tag_dict.get(tag[0].upper(), wordnet.NOUN)
 
 
-# Enhanced keyword categories
 expanded_keywords = {
     "return": {"return", "refund", "exchange", "give back", "send back"},
     "deliver": {"deliver", "shipping", "transport", "shipment", "deliver"},
@@ -72,7 +69,6 @@ expanded_keywords = {
     "exit": {"exit", "quit", "leave"},
 }
 
-# Entity recognition dictionaries
 products = {
     "tshirt": {"tshirt", "t-shirt", "t shirt", "shirt", "tee"},
     "jeans": {"jeans", "denim", "pants", "trousers"}
@@ -138,7 +134,6 @@ def identify_entities(tokens):
         if identified_attribute:
             break
 
-    # Check for values based on attributes
     if identified_attribute == "size":
         value_dict = size_values
     elif identified_attribute == "color":
@@ -162,7 +157,6 @@ def identify_entities(tokens):
 def chatbot_response(user_input):
     lemmatizer = WordNetLemmatizer()
 
-    # Remove stopwords
     stop_words = set(stopwords.words('english'))
     tokens = word_tokenize(user_input.lower())
 
