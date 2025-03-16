@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DROP//BOT | Streetwear Assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="chat-container">
+    <header class="chat-header">
+      <div class="brand-tag">EST.2025</div>
+      <h1>DROP//BOT</h1>
+      <p>Your Exclusive Streetwear Assistant</p>
+    </header>
+    <div class="chat-messages" id="chat-messages">
+      <!-- Chat messages will appear here -->
+    </div>
+    <form id="chat-form" class="chat-form">
+      <input type="text" id="user-input" placeholder="Drop your question here..." autocomplete="off">
+      <button type="submit">SEND</button>
+    </form>
+  </div>
+
+  <script>
+    // Mostrar mensaje de bienvenida al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        appendMessage('DROP//BOT', 'Welcome to the streets. How can I help you today?');
+      }, 500);
+    });
+
+    document.getElementById('chat-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = document.getElementById('user-input');
+      const message = input.value;
+      if (message.trim() === '') return;
+      appendMessage('YOU', message);
+
+      // Enviar mensaje al backend
+      fetch('/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: message })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Mostrar indicador de escritura
+        const chatMessages = document.getElementById('chat-messages');
+        const typingIndicator = document.createElement('div');
+        typingIndicator.classList.add('message', 'chatbot', 'typing');
+        typingIndicator.innerHTML = '<strong>DROP//BOT:</strong> <span class="dot-typing"></span>';
+        chatMessages.appendChild(typingIndicator);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        // Remover indicador y mostrar mensaje real después de un retraso
+        setTimeout(() => {
+          chatMessages.removeChild(typingIndicator);
+          appendMessage('DROP//BOT', data.response);
+        }, 800);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        appendMessage('DROP//BOT', 'Connection lost. Try again later.');
+      });
+
+      input.value = '';
+    });
+
+    function appendMessage(sender, text) {
+      const chatMessages = document.getElementById('chat-messages');
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message', sender === 'YOU' ? 'usuario' : 'chatbot');
+      messageElement.innerHTML = '<strong>' + sender + '</strong> ' + text;
+      chatMessages.appendChild(messageElement);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+  </script>
+</body>
+</html>

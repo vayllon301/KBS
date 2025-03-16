@@ -1,3 +1,4 @@
+from flask import Flask, request, jsonify, render_template
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
@@ -8,6 +9,7 @@ nltk.download('wordnet', quiet=True)
 nltk.download('stopwords', quiet=True)
 nltk.download('punkt', quiet=True)
 nltk.download('averaged_perceptron_tagger', quiet=True)
+
 
 responses = {
     "return": "You can return any item within 30 days with all costs covered.",
@@ -58,7 +60,7 @@ product_responses = {
         "style": {
             "slim": "Slim fit jeans are available in sizes 30 and 32.",
             "regular": "Regular fit jeans are available in sizes 30, 32, and 34.",
-            "relaxed": "Relaxed fit jeans are available in sizes 32, 34, and 36."
+            "relaxed": "Relaxed fit jeans are priced affordably and are perfect for everyday wear."
         },
         "material": {
             "denim": "Our jeans are made from high-quality denim, ensuring durability and comfort.",
@@ -138,10 +140,6 @@ product_responses = {
     }
 }
 
-def get_wordnet_pos(tag):
-    tag_dict = {'J': wordnet.ADJ, 'N': wordnet.NOUN, 'V': wordnet.VERB, 'R': wordnet.ADV}
-    return tag_dict.get(tag[0].upper(), wordnet.NOUN)
-
 expanded_keywords = {
     "return": {"return", "refund", "exchange", "give back", "send back", "devolver", "cambiar"},
     "deliver": {"deliver", "shipping", "transport", "shipment", "delivery", "ship", "envío", "enviar"},
@@ -164,7 +162,7 @@ products = {
 
 attributes = {
     "size": {"size", "fit", "dimension", "talla", "tamaño", "medida"},
-    "color": {"color", "colour", "shade", "color", "tono"},
+    "color": {"color", "colour", "shade", "tono"},
     "style": {"style", "cut", "design", "estilo", "corte", "diseño"},
     "material": {"material", "fabric", "composition", "cloth", "tela", "composición", "tejido"},
     "price": {"price", "cost", "precio", "costo", "valor"}
@@ -212,6 +210,7 @@ material_values = {
     "cashmere": {"cashmere", "kashmir", "cachemira"},
     "stretch": {"stretch", "elastic", "elastane", "spandex", "elástico", "elastico"}
 }
+
 
 def fuzzy_match(token, keywords, threshold=80):
     for keyword in keywords:
@@ -264,6 +263,10 @@ def identify_product_and_attributes(tokens):
                         break
     return identified_product, recognized_attributes
 
+def get_wordnet_pos(tag):
+    tag_dict = {'J': wordnet.ADJ, 'N': wordnet.NOUN, 'V': wordnet.VERB, 'R': wordnet.ADV}
+    return tag_dict.get(tag[0].upper(), wordnet.NOUN)
+
 def chatbot_response(user_input):
     lemmatizer = WordNetLemmatizer()
     stop_words = set(stopwords.words('english'))
@@ -295,12 +298,20 @@ def chatbot_response(user_input):
         return product_responses[product]["default"]
     return "I'm not sure about that. Could you ask in a different way?"
 
-while True:
-    print("\nDo you have any questions? (Type 'exit' to quit)")
-    user_question = input()
-    if user_question.lower() == 'exit':
-        break
-    response = chatbot_response(user_question)
-    if response == "exit":
-        break
-    print("Chatbot:", response)
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.get_json()
+    user_message = data.get('message', '')
+    if user_message.strip() == '':
+        return jsonify({'response': 'Por favor escribe un mensaje.'})
+    respuesta = chatbot_response(user_message)
+    return jsonify({'response': respuesta})
+
+if __name__ == '__main__':
+    app.run(debug=True)
