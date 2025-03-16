@@ -10,12 +10,12 @@ nltk.download('punkt', quiet=True)
 nltk.download('averaged_perceptron_tagger', quiet=True)
 
 responses = {
-    "return": "You can return any item within 30 days with all costs covered.",
-    "deliver": "We offer free delivery on orders above $50. Standard shipping takes 3-5 business days.",
-    "discount": "We have seasonal discounts! Check our website for the latest deals.",
+    "return": "The product return policy guarantees free refund within 30 days for each item purchased.",
+    "deliver": "The company delivers orders free of charge whenever customers spend more than $50. Standard shipping takes 3-5 business days.",
+    "discount": "We have seasonal discounts! View our website to find the current offers!",
     "availability": "Please specify the product name so I can check its stock.",
-    "price": "Our prices are competitive. Could you specify which item you're interested in?",
-    "payment": "We accept all major credit cards, PayPal, and Apple Pay for your convenience.",
+    "price": "Our prices are competitive. I need to know which particular product you want information about.",
+    "payment": "The business accepts payment through major credit cards along with PayPal and Apple Pay for customer convenience.",
     "help": "I'm here to help! Feel free to ask about our products, shipping, returns, or anything else.",
     "store": "We have physical stores in major cities and an online store available 24/7.",
     "warranty": "Our products come with a 1-year warranty against manufacturing defects.",
@@ -29,21 +29,21 @@ product_responses = {
             "small": "Small t-shirts are available in red, blue, and black.",
             "medium": "Medium t-shirts come in red, blue, black, and white.",
             "large": "Large t-shirts are available in blue and black.",
-            "xlarge": "Extra large t-shirts are available in limited colors: black and white."
+            "xlarge": "Extra large t-shirts are available in two colors: black and white."
         },
         "color": {
-            "red": "Our red t-shirts are vibrant and popular in both small and medium sizes.",
+            "red": "Our red t-shirts are popular in both small and medium sizes.",
             "blue": "Blue t-shirts are offered in small, medium, and large sizes.",
             "black": "Black t-shirts are a bestseller and available in all sizes.",
             "white": "White t-shirts are available in medium and extra large sizes."
         },
         "material": {
-            "cotton": "Our cotton t-shirts are 100% cotton – soft, breathable, and comfortable.",
-            "polyester": "We also offer polyester t-shirts for a lighter and moisture-wicking option."
+            "cotton": "Our t-shirts are 100% cotton – soft, and comfortable!",
+            "polyester": "We offer polyester t-shirts for a lighter option."
         },
         "price": {
             "default": "Our t-shirts range from $19.99 to $29.99 depending on style and material.",
-            "cotton": "Cotton t-shirts are priced at $24.99 each, with discounts for bulk purchases.",
+            "cotton": "Cotton t-shirts are priced at $24.99 each, with discounts for big purchases.",
             "polyester": "Polyester t-shirts are available for $19.99, our most affordable option."
         }
     },
@@ -53,7 +53,7 @@ product_responses = {
             "30": "Size 30 jeans are available in slim and regular fits.",
             "32": "Size 32 jeans come in slim, regular, and relaxed fits.",
             "34": "Size 34 jeans are available in regular and relaxed fits.",
-            "36": "Size 36 jeans are offered exclusively in a relaxed fit."
+            "36": "Size 36 jeans are offered only in a relaxed fit."
         },
         "style": {
             "slim": "Slim fit jeans are available in sizes 30 and 32.",
@@ -62,7 +62,7 @@ product_responses = {
         },
         "material": {
             "denim": "Our jeans are made from high-quality denim, ensuring durability and comfort.",
-            "stretch": "Our stretch jeans contain 2% elastane for extra comfort and flexibility."
+            "stretch": "Our stretch jeans contain 5% elastane for extra comfort and flexibility."
         },
         "price": {
             "default": "Our jeans range from $39.99 to $59.99 depending on style and material.",
@@ -71,8 +71,8 @@ product_responses = {
             "relaxed": "Relaxed fit jeans are priced at $39.99, perfect for everyday comfort."
         },
         "color": {
-            "blue": "Our blue jeans come in various shades from light wash to dark indigo.",
-            "black": "Black jeans are available in all fits and are perfect for versatile styling.",
+            "blue": "Our blue jeans come in various shades from light to dark.",
+            "black": "Black jeans are available in all fits.",
             "gray": "Gray jeans are available in slim and regular fits only."
         }
     },
@@ -85,8 +85,8 @@ product_responses = {
             "xlarge": "XL jackets fit chest sizes 48-50 inches and are available in selected styles."
         },
         "material": {
-            "leather": "Our leather jackets are made from premium full-grain leather for durability.",
-            "denim": "Denim jackets are lightweight and perfect for layering in spring and fall.",
+            "leather": "Our leather jackets are made from premium leather for durability.",
+            "denim": "Denim jackets are lightweight and perfect for spring and fall.",
             "cotton": "Cotton jackets offer breathability and comfort for mild weather."
         },
         "style": {
@@ -101,8 +101,8 @@ product_responses = {
             "cotton": "Cotton jackets are available for $89.99."
         },
         "color": {
-            "black": "Black jackets are timeless and available in all materials and styles.",
-            "brown": "Brown jackets are primarily available in leather for a classic look.",
+            "black": "Black jackets are available in all materials and styles.",
+            "brown": "Brown jackets are available in leather.",
             "blue": "Blue jackets are popular in denim and cotton materials."
         }
     },
@@ -120,7 +120,7 @@ product_responses = {
             "cashmere": "Cashmere sweaters are our luxurious option - incredibly soft and warm."
         },
         "style": {
-            "crewneck": "Crewneck sweaters have a round neckline for a classic look.",
+            "crewneck": "Crewneck sweaters have a round neckline.",
             "v-neck": "V-neck sweaters feature a V-shaped neckline for a more formal appearance.",
             "cardigan": "Cardigans have front buttons and are perfect for versatile layering."
         },
@@ -143,74 +143,74 @@ def get_wordnet_pos(tag):
     return tag_dict.get(tag[0].upper(), wordnet.NOUN)
 
 expanded_keywords = {
-    "return": {"return", "refund", "exchange", "give back", "send back", "devolver", "cambiar"},
-    "deliver": {"deliver", "shipping", "transport", "shipment", "delivery", "ship", "envío", "enviar"},
-    "discount": {"discount", "sale", "offer", "deal", "promotion", "coupon", "descuento", "oferta", "promoción"},
-    "availability": {"stock", "available", "inventory", "in store", "disponible", "inventario"},
-    "price": {"price", "cost", "how much", "pricing", "precio", "cuánto cuesta", "valor"},
-    "payment": {"payment", "pay", "credit card", "debit card", "pago", "tarjeta", "pagar"},
-    "help": {"help", "support", "assist", "guidance", "ayuda", "soporte", "asistencia"},
-    "store": {"store", "location", "shop", "physical", "tienda", "ubicación", "local"},
-    "warranty": {"warranty", "guarantee", "garantía", "garantizar"},
-    "exit": {"exit", "quit", "leave", "goodbye", "bye", "salir", "adiós"},
+    "return": {"return", "refund", "exchange", "give back", "send back"},
+    "deliver": {"deliver", "shipping", "transport", "shipment", "delivery", "ship"},
+    "discount": {"discount", "sale", "offer", "deal", "promotion", "coupon"},
+    "availability": {"stock", "available", "inventory", "in store"},
+    "price": {"price", "cost", "how much", "pricing"},
+    "payment": {"payment", "pay", "credit card", "debit card"},
+    "help": {"help", "support", "assist", "guidance"},
+    "store": {"store", "location", "shop", "physical"},
+    "warranty": {"warranty", "guarantee"},
+    "exit": {"exit", "quit", "leave", "goodbye", "bye"},
 }
 
 products = {
-    "tshirt": {"tshirt", "t-shirt", "t shirt", "shirt", "tee", "camiseta", "remera", "polera"},
-    "jeans": {"jeans", "denim", "pants", "trousers", "vaqueros", "pantalones", "mezclilla"},
-    "jacket": {"jacket", "coat", "blazer", "outerwear", "chaqueta", "chamarra", "abrigo"},
-    "sweater": {"sweater", "jumper", "pullover", "sweatshirt", "suéter", "jersey", "sudadera"}
+    "tshirt": {"tshirt", "t-shirt", "t shirt", "shirt", "tee"},
+    "jeans": {"jeans", "denim", "pants", "trousers"},
+    "jacket": {"jacket", "coat", "blazer", "outerwear"},
+    "sweater": {"sweater", "jumper", "pullover", "sweatshirt"}
 }
 
 attributes = {
-    "size": {"size", "fit", "dimension", "talla", "tamaño", "medida"},
-    "color": {"color", "colour", "shade", "color", "tono"},
-    "style": {"style", "cut", "design", "estilo", "corte", "diseño"},
-    "material": {"material", "fabric", "composition", "cloth", "tela", "composición", "tejido"},
-    "price": {"price", "cost", "precio", "costo", "valor"}
+    "size": {"size", "fit", "dimension"},
+    "color": {"color", "colour", "shade"},
+    "style": {"style", "cut", "design"},
+    "material": {"material", "fabric", "composition", "cloth"},
+    "price": {"price", "cost"}
 }
 
 size_values = {
-    "small": {"small", "s", "sm", "pequeño", "pequeña", "chico", "chica"},
-    "medium": {"medium", "m", "med", "mediano", "mediana"},
-    "large": {"large", "l", "lg", "grande", "amplio", "amplia"},
-    "xlarge": {"xlarge", "xl", "extra large", "extra grande"},
-    "30": {"30", "30 inch", "30\"", "talla 30"},
-    "32": {"32", "32 inch", "32\"", "talla 32"},
-    "34": {"34", "34 inch", "34\"", "talla 34"},
-    "36": {"36", "36 inch", "36\"", "talla 36"}
+    "small": {"small", "s", "sm"},
+    "medium": {"medium", "m", "med"},
+    "large": {"large", "l", "lg"},
+    "xlarge": {"xlarge", "xl", "extra large"},
+    "30": {"30", "30 inch", "30\""},
+    "32": {"32", "32 inch", "32\""},
+    "34": {"34", "34 inch", "34\""},
+    "36": {"36", "36 inch", "36\""}
 }
 
 color_values = {
-    "red": {"red", "crimson", "scarlet", "rojo", "roja"},
-    "blue": {"blue", "navy", "azure", "azul"},
-    "black": {"black", "jet black", "negro", "negra"},
-    "white": {"white", "snow white", "ivory", "blanco", "blanca"},
-    "gray": {"gray", "grey", "gris"},
-    "cream": {"cream", "off-white", "crema"},
-    "brown": {"brown", "chocolate", "marron", "marrón", "café"}
+    "red": {"red", "wine", "cherry"},
+    "blue": {"blue", "navy", "light blue"},
+    "black": {"black", "jet black"},
+    "white": {"white", "snow white", "ivory"},
+    "gray": {"gray", "grey"},
+    "cream": {"cream", "off-white"},
+    "brown": {"brown", "chocolate"}
 }
 
 style_values = {
-    "slim": {"slim", "skinny", "tight", "ajustado", "ajustada", "entallado"},
-    "regular": {"regular", "standard", "normal", "clásico", "clasico"},
-    "relaxed": {"relaxed", "loose", "comfortable", "relajado", "suelto", "holgado"},
-    "bomber": {"bomber", "flight", "aviator", "bombardero"},
-    "trucker": {"trucker", "denim jacket", "jean jacket", "camionero", "vaquero"},
-    "parka": {"parka", "hooded", "winter coat", "abrigo"},
-    "crewneck": {"crewneck", "round neck", "cuello redondo"},
-    "v-neck": {"v-neck", "v neck", "vneck", "cuello en v"},
-    "cardigan": {"cardigan", "button up", "open front", "cárdigan", "cardigan"}
+    "slim": {"slim", "skinny", "tight"},
+    "regular": {"regular", "standard", "normal"},
+    "relaxed": {"relaxed", "loose", "comfortable"},
+    "bomber": {"bomber", "flight", "aviator"},
+    "trucker": {"trucker", "denim jacket", "jean jacket"},
+    "parka": {"parka", "hooded", "winter coat"},
+    "crewneck": {"crewneck", "round neck"},
+    "v-neck": {"v-neck", "v neck", "vneck"},
+    "cardigan": {"cardigan", "button up", "open front"}
 }
 
 material_values = {
-    "cotton": {"cotton", "100% cotton", "pure cotton", "algodón", "algodon"},
-    "polyester": {"polyester", "poly", "poliéster", "poliester"},
-    "denim": {"denim", "jeans fabric", "mezclilla", "jean"},
-    "leather": {"leather", "genuine leather", "cuero", "piel"},
-    "wool": {"wool", "woolen", "lana", "lanero"},
-    "cashmere": {"cashmere", "kashmir", "cachemira"},
-    "stretch": {"stretch", "elastic", "elastane", "spandex", "elástico", "elastico"}
+    "cotton": {"cotton", "100% cotton", "pure cotton"},
+    "polyester": {"polyester", "poly"},
+    "denim": {"denim", "jeans fabric", "jean"},
+    "leather": {"leather", "genuine leather"},
+    "wool": {"wool", "woolen"},
+    "cashmere": {"cashmere", "kashmir"},
+    "stretch": {"stretch", "elastic", "elastane", "spandex"}
 }
 
 def fuzzy_match(token, keywords, threshold=80):

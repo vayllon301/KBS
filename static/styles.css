@@ -201,19 +201,6 @@ body {
   }
 }
 
-.brand-tag {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background-color: var(--secondary);
-  color: white;
-  padding: 0.2rem 0.5rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transform: rotate(3deg);
-}
 
 @media (max-width: 600px) {
   .chat-container {
