@@ -125,7 +125,35 @@
                 "navy": "Navy sweaters offer a classic color that pairs well with most outfits.",
                 "cream": "Cream sweaters have a timeless look and are especially popular in wool and cashmere."
             }
-        }
+        },
+        "shoes": {
+            "default": "We offer a variety of shoes in different sizes, colors, and materials.",
+            "size": {
+                "small": "Small shoes are available in sizes 36-38 EU.",
+                "medium": "Medium shoes are available in sizes 39-41 EU.",
+                "large": "Large shoes are available in sizes 42-44 EU.",
+                "xlarge": "Extra large shoes are available in sizes 45-47 EU."
+            },
+            "color": {
+                "black": "Black shoes are available in all sizes and styles.",
+                "white": "White shoes are popular for both casual and formal wear.",
+                "blue": "Blue shoes are available in select styles."
+            },
+            "material": {
+                "leather": "Our leather shoes are durable and stylish.",
+                "canvas": "Canvas shoes are lightweight and perfect for everyday use."
+            },
+            "style": {
+                "sneaker": "Sneakers are available in various colors and sizes.",
+                "loafer": "Loafers offer a classic look for formal occasions.",
+                "boot": "Boots are available for both men and women."
+            },
+            "price": {
+                "default": "Our shoes range from $49.99 to $149.99 depending on style and material.",
+                "leather": "Leather shoes are priced at $129.99.",
+                "canvas": "Canvas shoes are available for $59.99."
+            }
+}
     },
 
     "expanded_keywords": {
@@ -145,7 +173,8 @@
         "tshirt": ["tshirt", "t-shirt", "t shirt", "shirt", "tee"],
         "jeans": ["jeans", "denim", "pants", "trousers"],
         "jacket": ["jacket", "coat", "blazer", "outerwear"],
-        "sweater": ["sweater", "jumper", "pullover", "sweatshirt"]
+        "sweater": ["sweater", "jumper", "pullover", "sweatshirt"],
+        "shoes": ["shoes", "shoe", "sneaker", "sneakers", "footwear", "trainer", "trainers"]
     },
 
 
